@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to answer the pairwise comparisons</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: #e0e0e0;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  h1 {
+    font-size: 26px;
+    margin: 0 0 6px;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+  h2 {
+    font-size: 18px;
+    margin: 44px 0 14px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  p { font-size: 15px; }
+  .pair-block {
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    background: var(--card);
+  }
+  .pair-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .label-left, .label-right {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .label-right { text-align: right; }
+  .slider-wrap { position: relative; padding: 0 8px; }
+  .ahp-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    outline: none;
+    cursor: pointer;
+  }
+  .ahp-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #555;
+    cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .ahp-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #555;
+    cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .center-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 16px;
+    background: #bbb;
+    pointer-events: none;
+  }
+  .readout {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--muted);
+    min-height: 20px;
+  }
+  .readout strong { color: var(--ink); }
+  .callout {
+    background: #fff8e6;
+    border: 1px solid #f0d98c;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 14px;
+    margin: 16px 0;
+  }
+  .steps {
+    font-size: 15px;
+    padding-left: 20px;
+  }
+  .steps li { margin-bottom: 8px; }
+  .loop-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+  .arrow { color: var(--muted); font-weight: 400; }
+  .contradiction {
+    color: #b91c1c;
+  }
+  .result-box {
+    margin: 20px 0 10px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid transparent;
+  }
+  .result-ok {
+    background: #eafaf0;
+    border-color: #a8e6c1;
+    color: #146c37;
+  }
+  .result-bad {
+    background: #fdecec;
+    border-color: #f3a8a8;
+    color: #b91c1c;
+  }
+  .result-neutral {
+    background: #f2f2f2;
+    border-color: var(--border);
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .footer-note {
+    margin-top: 50px;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>How to answer the pairwise comparisons</h1>
+  <p class="subtitle">A quick guide to the sliders in the survey, and why each set of three answers needs to work together.</p>
+
+  <h2>1. Try the slider</h2>
+  <p>Drag it left or right. The further you drag, the stronger your preference. Leave it in the middle if both matter equally.</p>
+
+  <div class="pair-block">
+    <div class="pair-labels">
+      <span class="label-left" style="color:#1a56c4">Demand</span>
+      <span class="label-right" style="color:#2a7a4a">Accessibility</span>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" class="ahp-slider" id="demoSlider" min="0" max="8" step="1" value="4">
+      <div class="center-mark"></div>
+    </div>
+    <div class="readout" id="demoReadout">Equally important</div>
+  </div>
+
+  <div class="callout">
+    <strong>Important:</strong> click and drag the circle, don't just tap the bar. A single tap without dragging can leave it recorded as "equal," even if that's not what you meant.
+  </div>
+
+  <h2>2. Why the three answers in a group need to agree</h2>
+  <p>Each page asks about three things at once, in pairs. Try the three sliders below and see what happens if the answers don't agree with each other.</p>
+
+  <div class="pair-block">
+    <div class="pair-labels">
+      <span class="label-left" style="color:#1a56c4">Demand</span>
+      <span class="label-right" style="color:#2a7a4a">Accessibility</span>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" class="ahp-slider trio-slider" id="trioAB" min="0" max="8" step="1" value="2">
+      <div class="center-mark"></div>
+    </div>
+  </div>
+
+  <div class="pair-block">
+    <div class="pair-labels">
+      <span class="label-left" style="color:#2a7a4a">Accessibility</span>
+      <span class="label-right" style="color:#c47a1a">Market</span>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" class="ahp-slider trio-slider" id="trioBC" min="0" max="8" step="1" value="2">
+      <div class="center-mark"></div>
+    </div>
+  </div>
+
+  <div class="pair-block">
+    <div class="pair-labels">
+      <span class="label-left" style="color:#1a56c4">Demand</span>
+      <span class="label-right" style="color:#c47a1a">Market</span>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" class="ahp-slider trio-slider" id="trioAC" min="0" max="8" step="1" value="6">
+      <div class="center-mark"></div>
+    </div>
+  </div>
+
+  <div class="result-box" id="trioResult"></div>
+
+  <h2>3. Before moving to the next page</h2>
+  <ol class="steps">
+    <li>Look at your three answers together, not just one at a time.</li>
+    <li>Check that the one you rated highest overall is consistent across all three comparisons.</li>
+    <li>If not, adjust one of the sliders so the order makes sense.</li>
+  </ol>
+
+  <div class="footer-note">
+    This page is just a visual guide, not part of the survey itself.
+  </div>
+
+</div>
+
+<script>
+  var saatyValues = [-9, -7, -5, -3, -1, 3, 5, 7, 9];
+  var slider = document.getElementById('demoSlider');
+  var readout = document.getElementById('demoReadout');
+
+  function updateVisual(pos) {
+    var colorA = '#1a56c4';
+    var colorB = '#2a7a4a';
+    var thumbColor;
+
+    if (pos < 4) thumbColor = colorA;
+    else if (pos > 4) thumbColor = colorB;
+    else thumbColor = '#555';
+
+    if (pos < 4) {
+      var pctLeft = ((4 - pos) / 4) * 50;
+      slider.style.background = 'linear-gradient(to right, ' + '#e0e0e0 0%, #e0e0e0 ' + (50 - pctLeft) + '%, ' + colorA + ' ' + (50 - pctLeft) + '%, ' + colorA + ' 50%, #e0e0e0 50%, #e0e0e0 100%)';
+    } else if (pos > 4) {
+      var pctRight = ((pos - 4) / 4) * 50;
+      slider.style.background = 'linear-gradient(to right, #e0e0e0 0%, #e0e0e0 50%, ' + colorB + ' 50%, ' + colorB + ' ' + (50 + pctRight) + '%, #e0e0e0 ' + (50 + pctRight) + '%, #e0e0e0 100%)';
+    } else {
+      slider.style.background = '#e0e0e0';
+    }
+
+    var styleId = 'demoThumbStyle';
+    var existing = document.getElementById(styleId);
+    if (existing) existing.remove();
+    var styleEl = document.createElement('style');
+    styleEl.id = styleId;
+    styleEl.innerHTML = '#demoSlider::-webkit-slider-thumb{background:' + thumbColor + '!important;}' +
+                         '#demoSlider::-moz-range-thumb{background:' + thumbColor + '!important;}';
+    document.head.appendChild(styleEl);
+
+    if (pos === 4) {
+      readout.innerHTML = 'Equally important';
+    } else if (pos < 4) {
+      var val = Math.abs(saatyValues[pos]);
+      readout.innerHTML = '<strong>Demand</strong> matters ' + val + 'x more than Accessibility';
+    } else {
+      var val2 = saatyValues[pos];
+      readout.innerHTML = '<strong>Accessibility</strong> matters ' + val2 + 'x more than Demand';
+    }
+  }
+
+  slider.addEventListener('input', function() {
+    updateVisual(parseInt(this.value));
+  });
+
+  updateVisual(4);
+
+  // ---- Section 2: interactive 3-slider loop demo ----
+  var trioColors = {
+    trioAB: { a: '#1a56c4', b: '#2a7a4a', nameA: 'Demand', nameB: 'Accessibility' },
+    trioBC: { a: '#2a7a4a', b: '#c47a1a', nameA: 'Accessibility', nameB: 'Market' },
+    trioAC: { a: '#1a56c4', b: '#c47a1a', nameA: 'Demand', nameB: 'Market' }
+  };
+
+  function paintTrioSlider(el) {
+    var pos = parseInt(el.value);
+    var cfg = trioColors[el.id];
+    var thumbColor = pos < 4 ? cfg.a : pos > 4 ? cfg.b : '#555';
+
+    if (pos < 4) {
+      var pctLeft = ((4 - pos) / 4) * 50;
+      el.style.background = 'linear-gradient(to right, #e0e0e0 0%, #e0e0e0 ' + (50 - pctLeft) + '%, ' + cfg.a + ' ' + (50 - pctLeft) + '%, ' + cfg.a + ' 50%, #e0e0e0 50%, #e0e0e0 100%)';
+    } else if (pos > 4) {
+      var pctRight = ((pos - 4) / 4) * 50;
+      el.style.background = 'linear-gradient(to right, #e0e0e0 0%, #e0e0e0 50%, ' + cfg.b + ' 50%, ' + cfg.b + ' ' + (50 + pctRight) + '%, #e0e0e0 ' + (50 + pctRight) + '%, #e0e0e0 100%)';
+    } else {
+      el.style.background = '#e0e0e0';
+    }
+
+    var styleId = 'style_' + el.id;
+    var existing = document.getElementById(styleId);
+    if (existing) existing.remove();
+    var styleEl = document.createElement('style');
+    styleEl.id = styleId;
+    styleEl.innerHTML = '#' + el.id + '::-webkit-slider-thumb{background:' + thumbColor + '!important;}' +
+                         '#' + el.id + '::-moz-range-thumb{background:' + thumbColor + '!important;}';
+    document.head.appendChild(styleEl);
+  }
+
+  function direction(pos) {
+    // returns +1 if left side wins, -1 if right side wins, 0 if tied
+    if (pos < 4) return 1;
+    if (pos > 4) return -1;
+    return 0;
+  }
+
+  function checkTrio() {
+    var ab = parseInt(document.getElementById('trioAB').value);
+    var bc = parseInt(document.getElementById('trioBC').value);
+    var ac = parseInt(document.getElementById('trioAC').value);
+
+    var dAB = direction(ab); // +1 = Demand > Accessibility, -1 = Accessibility > Demand
+    var dBC = direction(bc); // +1 = Accessibility > Market, -1 = Market > Accessibility
+    var dAC = direction(ac); // +1 = Demand > Market, -1 = Market > Demand
+
+    var box = document.getElementById('trioResult');
+
+    if (dAB === 0 || dBC === 0 || dAC === 0) {
+      box.className = 'result-box result-neutral';
+      box.innerHTML = 'Move all three sliders away from the centre to see the check.';
+      return;
+    }
+
+    // Expected: if Demand>Accessibility and Accessibility>Market, then Demand>Market
+    if (dAB === dBC && dAC !== dAB) {
+      box.className = 'result-box result-bad';
+      var winner1 = dAB === 1 ? 'Demand' : 'Accessibility';
+      var loser1 = dAB === 1 ? 'Accessibility' : 'Demand';
+      var winner2 = dBC === 1 ? 'Accessibility' : 'Market';
+      var loser2 = dBC === 1 ? 'Market' : 'Accessibility';
+      var directWinner = dAC === 1 ? 'Demand' : 'Market';
+      box.innerHTML = 'Not valid: ' + winner1 + ' beats ' + loser1 + ', ' + winner2 + ' beats ' + loser2 +
+        ', but then ' + directWinner + ' comes out on top directly. That\'s a loop, please adjust one of the three.';
+    } else {
+      box.className = 'result-box result-ok';
+      box.innerHTML = 'Valid: your three answers agree with each other.';
+    }
+  }
+
+  ['trioAB', 'trioBC', 'trioAC'].forEach(function(id) {
+    var el = document.getElementById(id);
+    paintTrioSlider(el);
+    el.addEventListener('input', function() {
+      paintTrioSlider(this);
+      checkTrio();
+    });
+  });
+
+  checkTrio();
+</script>
+
+</body>
+</html>
